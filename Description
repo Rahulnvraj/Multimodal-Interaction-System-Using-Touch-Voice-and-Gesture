@@ -1,0 +1,90 @@
+**Assignment Title: Multimodal Interaction System Using Touch, Voice, and Gesture**
+
+---
+
+**Objective:**
+To develop a web-based system that integrates multiple interaction modalities such as touch, voice, and gesture to provide a seamless and interactive user experience. This system enhances user accessibility and usability by allowing interactions through various natural input methods.
+
+---
+
+**Requirements:**
+
+1. **Software Requirements:**
+   - A modern web browser (preferably Google Chrome or Microsoft Edge)
+   - Text Editor (e.g., VS Code, Sublime Text)
+   - Internet connection (to access external JS libraries)
+
+2. **Libraries and Tools:**
+   - HTML5, CSS3, JavaScript
+   - Web Speech API (for voice recognition)
+   - Handtrack.js (for gesture detection)
+
+3. **Hardware Requirements:**
+   - Computer or laptop with built-in or external webcam
+   - Microphone (built-in or external)
+
+---
+
+**Working of the Project:**
+
+The system comprises three types of interactions:
+
+1. **Touch Interaction:**
+   - Users can click on the on-screen buttons to trigger UI changes.
+   - Example: A button changes the background color and displays an alert message upon clicking.
+
+2. **Voice Interaction:**
+   - Utilizes the Web Speech API to listen for specific voice commands.
+   - Recognizes words like "blue" or "green" and changes the background color accordingly.
+   - If an unrecognized command is given, the system notifies the user.
+
+3. **Gesture Interaction:**
+   - Uses the handtrack.js library to detect the presence of a hand via webcam.
+   - When a hand is detected, the interface changes (e.g., background color updates).
+   - Real-time detection is shown through text output on the page.
+
+The system runs entirely on the client side within a web browser. Camera and microphone permissions must be granted for the gesture and voice features to work.
+
+---
+
+**Procedure:**
+
+1. **Setup:**
+   - Create an HTML file that includes structure for buttons and video elements.
+   - Add styling with CSS to center content and allow a background video.
+   - Include JavaScript to handle events and feature integrations.
+
+2. **Integrating Touch Events:**
+   - Add an `onclick` handler to a button element that changes the page background and shows a message.
+
+3. **Voice Recognition Setup:**
+   - Initialize the Web Speech API in JavaScript.
+   - Add functionality to capture spoken input and trigger actions.
+
+4. **Gesture Detection Setup:**
+   - Load the handtrack.js model with required parameters.
+   - Start video stream from webcam.
+   - Continuously detect hand presence and update the interface.
+
+5. **Testing:**
+   - Open the webpage in a compatible browser (Edge recommended).
+   - Ensure permissions for microphone and camera are allowed.
+   - Interact using buttons, voice, and hand gestures to test each modality.
+
+---
+
+**Advantages and Applications:**
+- Offers an intuitive and accessible interface.
+- Can be used in smart homes, education, and assistive technology.
+- Adds user engagement through dynamic and responsive interactions.
+
+---
+
+**Conclusion:**
+This project demonstrates how multimodal interaction can significantly enhance web usability. By incorporating touch, voice, and gesture controls, the interface becomes more natural and user-friendly. The implementation can be extended to include more complex commands, multi-user environments, and mobile compatibility.
+
+---
+
+**Screenshots:**
+*(Include screenshots of UI showing all three interaction types)*
+
