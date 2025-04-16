@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Multimodal Interaction - Touch, Voice, Gesture</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      padding: 30px;
+    }
+
+    button {
+      font-size: 18px;
+      margin: 10px;
+      padding: 15px 25px;
+      cursor: pointer;
+    }
+
+    #video {
+      width: 400px;
+      border: 2px solid #333;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Multimodal Interaction System</h1>
+
+  <!-- Touch -->
+  <button onclick="onTouch()">👆 Touch Me!</button><br>
+
+  <!-- Voice -->
+  <button onclick="startVoice()">🎤 Voice Command</button>
+  <p id="voiceOutput">Voice: Not detected</p>
+
+  <!-- Gesture -->
+  <button onclick="startGesture()">🖐 Start Gesture Detection</button>
+  <p id="gestureOutput">Gesture: Not detected</p>
+  <video id="video" autoplay muted></video>
+
+  <!-- Include HandTrack.js -->
+  <script src="https://unpkg.com/handtrackjs@0.0.13/dist/handtrack.min.js"></script>
+
+  <script>
+    // TOUCH
+    function onTouch() {
+      document.body.style.backgroundColor = "#dcedc8";
+      alert("Touch detected!");
+    }
+
+    // VOICE
+    function startVoice() {
+      const output = document.getElementById("voiceOutput");
+      try {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRecognition) {
+          alert("Voice recognition not supported in this browser.");
+          return;
+        }
+
+        const recognition = new SpeechRecognition();
+        recognition.lang = "en-US";
+        recognition.start();
+
+        recognition.onresult = (event) => {
+          const command = event.results[0][0].transcript.toLowerCase();
+          output.innerText = "Voice: " + command;
+
+          if (command.includes("blue")) {
+            document.body.style.backgroundColor = "#bbdefb";
+          } else if (command.includes("green")) {
+            document.body.style.backgroundColor = "#c8e6c9";
+          } else {
+            alert("Voice command not recognized.");
+          }
+        };
+
+        recognition.onerror = (err) => {
+          output.innerText = "Voice error: " + err.error;
+        };
+      } catch (e) {
+        alert("Voice feature not supported.");
+      }
+    }
+
+    // GESTURE
+    let model;
+    const video = document.getElementById("video");
+
+    const modelParams = {
+      flipHorizontal: true,
+      maxNumBoxes: 1,
+      iouThreshold: 0.5,
+      scoreThreshold: 0.6,
+    };
+
+    function startGesture() {
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        alert("Camera not supported in this browser.");
+        return;
+      }
+
+      handTrack.load(modelParams).then(lmodel => {
+        model = lmodel;
+        handTrack.startVideo(video).then(status => {
+          if (status) {
+            detectGesture();
+          } else {
+            alert("Please allow camera access.");
+          }
+        });
+      });
+    }
+
+    function detectGesture() {
+      model.detect(video).then(predictions => {
+        const gestureOutput = document.getElementById("gestureOutput");
+        if (predictions.length > 0) {
+          gestureOutput.innerText = "Gesture: Hand detected!";
+          document.body.style.backgroundColor = "#fff9c4";
+        } else {
+          gestureOutput.innerText = "Gesture: No hand";
+        }
+        requestAnimationFrame(detectGesture);
+      });
+    }
+  </script>
+</body>
+</html>
